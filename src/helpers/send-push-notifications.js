@@ -1,10 +1,8 @@
-
-
-import { Platform } from 'react-native';
+import { Platform } from 'react-native'
 
 function* chunks(arr, n) {
   for (let i = 0; i < arr.length; i += n) {
-    yield arr.slice(i, i + n);
+    yield arr.slice(i, i + n)
   }
 }
 
@@ -15,7 +13,7 @@ function* chunks(arr, n) {
  */
 export default function sendPushNotifications(notification, tokens = []) {
   if (Platform.OS !== 'android' /**TODO: iOS */) {
-    return Promise.reject('Cannot send push notification from web!');
+    return Promise.reject('Cannot send push notification from web!')
   }
 
   const notifications = tokens.map((token) => {
@@ -24,25 +22,25 @@ export default function sendPushNotifications(notification, tokens = []) {
       sound: notification.sound || 'default',
       title: notification.title || 'Default Title',
       body: notification.body || 'Message Received',
-      data: notification.data || { data: 'default payload' } // sample
-    };
-  });
+      data: notification.data || { data: 'default payload' }, // sample
+    }
+  })
 
   // Expo Notification can receive a request body as an array of up to 100 message objects. See https://docs.expo.io/push-notifications/sending-notifications/
-  const payloads = [...chunks(notifications, 100)];
+  const payloads = [...chunks(notifications, 100)]
 
-  const requests = payloads.map(payload => fetch(
-    'https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-          host: 'exp.host',
-          Accept: 'application/json',
-          'accept-encoding': 'gzip, deflate',
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      }
-  ))
+  const requests = payloads.map((payload) =>
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        host: 'exp.host',
+        Accept: 'application/json',
+        'accept-encoding': 'gzip, deflate',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+  )
 
-  return Promise.all(requests);
+  return Promise.all(requests)
 }

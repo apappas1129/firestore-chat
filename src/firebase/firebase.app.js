@@ -1,6 +1,6 @@
-import * as firebase from 'firebase';
-import '@firebase/auth';
-import '@firebase/firestore';
+import * as firebase from 'firebase'
+import '@firebase/auth'
+import '@firebase/firestore'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCI8XZTr0uYVfsOekGf9HyibI8oTAD_HTk',
@@ -10,12 +10,12 @@ const firebaseConfig = {
   storageBucket: 'reactnativefirebase-78631.appspot.com',
   messagingSenderId: '243790233194',
   appId: '1:243790233194:web:44e3e983f7bdb587c39413',
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
 }
 
-const firestore = firebase.firestore();
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
 
-export { firebase, firestore };
+const firestore = firebase.firestore()
+
+export { firebase, firestore }
