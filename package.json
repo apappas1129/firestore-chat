@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint src/**/*.js App.js",
-    "test": "jest",
+    "test": "jest --detectOpenHandles --forceExit",
     "test:update-snapshot": "jest -u",
     "test:dev": "jest --watch --coverage=false --changedSince=origin/master",
     "test:coverage": "jest --verbose --updateSnapshot --watch --coverage && open ./coverage/lcov-report/index.html"
