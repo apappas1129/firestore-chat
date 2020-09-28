@@ -1,31 +1,40 @@
 /* eslint-disable no-undef */
 
-import React from 'react'
-import { create } from 'react-test-renderer'
+import React, { useState } from 'react'
+import { create, act } from 'react-test-renderer'
 import App from '../App'
 
-// HACK: experimental; Remove if unnecessary
-// Trying to mock App's state to render home page
-const setHookState = (newState) => jest.fn().mockImplementation(() => [
-  newState,
-  () => {}
-])
-React.useState = setHookState({
-  user: {
-    _id: '93nJbIsNNRMezRIXoIgKUg9PKh42',
-    email: 'apappas1129@gmail.com',
-    name: 'Ts Xs'
-  },
-  loading: false
-})
+//HACK: https://github.com/facebook/jest/issues/4359#issuecomment-413238977
+jest.useFakeTimers()
+
+// NOTE: Stubbinitial states according to the order of `useState`'s of the component
+const loading = false
+const user = {
+  _id: '93nJbIsNNRMezRIXoIgKUg9PKh42',
+  email: 'apappas1129@gmail.com',
+  name: 'Ts Xs',
+}
+
+// Mocking state hooks in order
+jest
+  .spyOn(React, 'useState')
+  .mockImplementationOnce(() => useState(loading))
+  .mockImplementationOnce(() => useState(user))
 
 const tree = create(<App />)
+
+console.log('Let me see:', tree)
+console.log('1. I see dead people.', tree.toJSON())
+console.log('2. I see dead people.', tree.getInstance())
+console.log('3. I see dead people.', tree.toTree())
 
 /**
  * Basic Unit Test
  */
-it('App renders without crashing', () => {
-  expect(tree.toJSON()).toBeTruthy()
+it('App renders without crashing', async () => {
+  await act(async () => {
+    expect(tree.toJSON()).toBeTruthy()
+  })
 })
 
 /**
@@ -34,6 +43,8 @@ it('App renders without crashing', () => {
  * potentially shared across components.
  * Read more about it on https://jestjs.io/docs/en/snapshot-testing.
  */
-it('App test against snapshot', () => {
-  expect(tree.toJSON()).toMatchSnapshot()
+it('App test against snapshot', async () => {
+  await act(async () => {
+    expect(tree.toJSON()).toMatchSnapshot()
+  })
 })

@@ -98,9 +98,9 @@ const ChatScreen = (props) => {
   }
 
   return (
+    // {/* {Platform.OS === 'android' && <KeyboardAvoidingView behavior='padding' />} */}
     <View style={{ flex: 1 }}>
       <GiftedChat messages={messages} user={user} onSend={handleSend} />
-      {/* {Platform.OS === 'android' && <KeyboardAvoidingView behavior='padding' />} */}
     </View>
   )
 }

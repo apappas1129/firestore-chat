@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 import React, { useEffect } from 'react'
-import { LogBox } from 'react-native'
+import { LogBox, View, Text } from 'react-native'
 import { firebase, firestore } from './src/firebase/firebase.app'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -22,7 +22,6 @@ try {
 } catch (error) {
   console.log(error)
 }
-
 
 const Stack = createStackNavigator()
 
@@ -53,20 +52,30 @@ export default function App() {
   }, [])
 
   if (loading) {
-    return <></>
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          height: 100,
+          padding: 20,
+        }}
+      >
+        <Text>Hello World!</Text>
+      </View>
+    )
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
-          <Stack.Screen name='Home'>
+          <Stack.Screen name="Home">
             {(props) => <ChatScreen {...props} userData={user} />}
           </Stack.Screen>
         ) : (
           <>
-            <Stack.Screen name='Login' component={LoginScreen} />
-            <Stack.Screen name='Registration' component={RegistrationScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
           </>
         )}
       </Stack.Navigator>
