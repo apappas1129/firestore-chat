@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { LogBox } from 'react-native'
 import { firebase, firestore } from './src/firebase/firebase.app'
 import { NavigationContainer } from '@react-navigation/native'
@@ -14,16 +14,21 @@ if (!global.atob) {
   global.atob = decode
 }
 
-LogBox.ignoreLogs([
-  new RegExp('Setting a timer for a long period of time'),
-  new RegExp('Remote debugger'),
-])
+try {
+  LogBox.ignoreLogs([
+    new RegExp('Setting a timer for a long period of time'),
+    new RegExp('Remote debugger'),
+  ])
+} catch (error) {
+  console.log(error)
+}
+
 
 const Stack = createStackNavigator()
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
+  const [loading, setLoading] = React.useState(true)
+  const [user, setUser] = React.useState(null)
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {

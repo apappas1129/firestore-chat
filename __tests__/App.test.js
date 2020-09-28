@@ -4,18 +4,12 @@ import React from 'react'
 import { create } from 'react-test-renderer'
 import App from '../App'
 
-// HACK: experimental
+// HACK: experimental; Remove if unnecessary
+// Trying to mock App's state to render home page
 const setHookState = (newState) => jest.fn().mockImplementation(() => [
   newState,
   () => {}
 ])
-
-
-// jest.mock('../node_modules/@react-navigation/stack', () => {
-// })
-
-
-// HACK: experimental
 React.useState = setHookState({
   user: {
     _id: '93nJbIsNNRMezRIXoIgKUg9PKh42',
