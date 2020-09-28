@@ -6,7 +6,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint src/**/*.js App.js"
+    "lint": "eslint src/**/*.js App.js",
+    "test": "jest",
+    "test:coverage": "jest --verbose --updateSnapshot --watch --coverage && open ./coverage/lcov-report/index.html"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
@@ -33,7 +35,15 @@
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "~8.1.0",
     "eslint": "^7.9.0",
-    "eslint-plugin-react": "^7.20.6"
+    "eslint-plugin-react": "^7.20.6",
+    "jest-expo": "^39.0.0",
+    "react-test-renderer": "^16.13.1"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ]
+  }
 }
