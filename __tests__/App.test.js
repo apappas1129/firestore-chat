@@ -23,11 +23,6 @@ jest
 
 const tree = create(<App />)
 
-console.log('Let me see:', tree)
-console.log('1. I see dead people.', tree.toJSON())
-console.log('2. I see dead people.', tree.getInstance())
-console.log('3. I see dead people.', tree.toTree())
-
 /**
  * Basic Unit Test
  */
