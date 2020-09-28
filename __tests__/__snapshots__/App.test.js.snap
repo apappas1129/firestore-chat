@@ -8,15 +8,12 @@ exports[`App test against snapshot 1`] = `
     }
   }
 >
-  <RNCSafeAreaProvider
+  <RNCSafeAreaView
     onInsetsChange={[Function]}
     style={
-      Array [
-        Object {
-          "flex": 1,
-        },
-        undefined,
-      ]
+      Object {
+        "flex": 1,
+      }
     }
   >
     <View
@@ -110,7 +107,6 @@ exports[`App test against snapshot 1`] = `
             >
               <Text
                 accessibilityRole="header"
-                aria-level="1"
                 numberOfLines={1}
                 onLayout={[Function]}
                 style={
@@ -306,6 +302,6 @@ exports[`App test against snapshot 1`] = `
         </View>
       </View>
     </View>
-  </RNCSafeAreaProvider>
+  </RNCSafeAreaView>
 </View>
 `;
