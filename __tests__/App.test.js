@@ -1,15 +1,37 @@
 /* eslint-disable no-undef */
 
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { create } from 'react-test-renderer'
 import App from '../App'
+
+// HACK: experimental
+const setHookState = (newState) => jest.fn().mockImplementation(() => [
+  newState,
+  () => {}
+])
+
+
+// jest.mock('../node_modules/@react-navigation/stack', () => {
+// })
+
+
+// HACK: experimental
+React.useState = setHookState({
+  user: {
+    _id: '93nJbIsNNRMezRIXoIgKUg9PKh42',
+    email: 'apappas1129@gmail.com',
+    name: 'Ts Xs'
+  },
+  loading: false
+})
+
+const tree = create(<App />)
 
 /**
  * Basic Unit Test
  */
 it('App renders without crashing', () => {
-  const rendered = renderer.create(<App />).toJSON()
-  expect(rendered).toBeTruthy()
+  expect(tree.toJSON()).toBeTruthy()
 })
 
 /**
@@ -19,6 +41,5 @@ it('App renders without crashing', () => {
  * Read more about it on https://jestjs.io/docs/en/snapshot-testing.
  */
 it('App test against snapshot', () => {
-  const tree = renderer.create(<App />).toJSON()
-  expect(tree).toMatchSnapshot()
+  expect(tree.toJSON()).toMatchSnapshot()
 })
