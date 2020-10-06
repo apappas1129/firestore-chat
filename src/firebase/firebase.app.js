@@ -1,15 +1,16 @@
 import * as firebase from 'firebase'
 import '@firebase/auth'
 import '@firebase/firestore'
+import '@firebase/storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCI8XZTr0uYVfsOekGf9HyibI8oTAD_HTk',
-  authDomain: 'reactnativefirebase-78631.firebaseapp.com',
-  databaseURL: 'https://reactnativefirebase-78631.firebaseio.com',
-  projectId: 'reactnativefirebase-78631',
-  storageBucket: 'reactnativefirebase-78631.appspot.com',
-  messagingSenderId: '243790233194',
-  appId: '1:243790233194:web:44e3e983f7bdb587c39413',
+  apiKey: 'AIzaSyBegA8g71WdnpxcAiYQ54Jvac90gWVmshw',
+  authDomain: 'reactnativedemo-28f3b.firebaseapp.com',
+  databaseURL: 'https://reactnativedemo-28f3b.firebaseio.com',
+  projectId: 'reactnativedemo-28f3b',
+  storageBucket: 'reactnativedemo-28f3b.appspot.com',
+  messagingSenderId: '759121270965',
+  appId: '1:759121270965:web:674115d7f359b0f6b3c6fc',
 }
 
 if (!firebase.apps.length) {
@@ -17,5 +18,16 @@ if (!firebase.apps.length) {
 }
 
 const firestore = firebase.firestore()
+const cloudStorage = firebase.storage()
 
-export { firebase, firestore }
+/**
+ * Creates a new firestore timestamp from the given date.
+ * @param {Date} date
+ * @returns {Timestamp} A new Timestamp representing the same point in time as the given date.
+ * @typedef {import ("firebase").firestore.Timestamp} Timestamp
+ */
+const getTimestamp = (date) => {
+  return firebase.firestore.Timestamp.fromDate(date || new Date())
+}
+
+export { firebase, firestore, cloudStorage, getTimestamp }

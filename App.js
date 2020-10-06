@@ -38,7 +38,7 @@ export default function App() {
             setUser(userData)
           })
           .catch((error) => {
-            console.log('There was a problem on getting the user.', error)
+            console.warn('There was a problem on getting the user.', error)
             setLoading(false)
           })
       } else {

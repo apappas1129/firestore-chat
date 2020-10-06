@@ -1,14 +1,24 @@
+// @refresh reset
+
 import React, { useEffect, useState, useCallback } from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { View, Platform } from 'react-native'
 // import { View, KeyboardAvoidingView, Platform } from 'react-native'
-import { View } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
-
-import { firestore } from '../../firebase/firebase.app'
-import registerToPushNotification from '../../helpers/register-to-push-notification'
-import sendPushNotifications from '../../helpers/send-push-notifications'
-
 import PropTypes from 'prop-types'
+
+import { Ionicons } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
+
+import AsyncStorage from '@react-native-community/async-storage'
+import { GiftedChat, Actions } from 'react-native-gifted-chat'
+import { firestore, getTimestamp } from '../../firebase/firebase.app'
+import {
+  registerToPushNotification,
+  sendPushNotifications,
+  pickFromLibrary,
+  upload,
+} from '../../utils'
+
+import { v4 as uuidV4 } from 'uuid'
 
 const chatsRef = firestore.collection('chats')
 const expoPushTokensRef = firestore.collection('expoPushTokens')
@@ -92,23 +102,96 @@ const ChatScreen = (props) => {
 
     const notif = {
       title: user.name.trim() + 'sent a message!',
-      body: (messages[0].text || '').slice(0, 49), // Android standard max length for notifs is 49 characters
+      body: (messages[0].text || '...').slice(0, 49), // Android standard max length for notifs is 49 characters
     }
     await sendPushNotifications(notif, participantTokens)
   }
 
+  async function pickFromGallery() {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!')
+        return
+      }
+    }
+
+    const { uri, cancelled } = await pickFromLibrary()
+
+    !cancelled && uri && uploadImage(uri)
+  }
+
+  function uploadImage(uri) {
+    upload(uri, uuidV4()).then(async (uploadTaskSnapshot) => {
+      const downloadURL = await uploadTaskSnapshot.ref.getDownloadURL()
+
+      handleSend([
+        {
+          _id: uuidV4(),
+          createdAt: getTimestamp(),
+          user,
+          image: downloadURL,
+        },
+      ])
+    })
+    // KEEP 🔍
+    // UploadTask.on('state_changed', ({ bytesTransferred, totalBytes }) => {
+    //   // Upload progress
+    //   console.info(`${bytesTransferred} transferred out of ${totalBytes}`)
+    // })
+  }
+
+  async function useCamera() {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync()
+      if (status !== 'granted') {
+        alert('Sorry, we need camera permissions to make this work!')
+        return
+      }
+    }
+
+    const { uri, cancelled } = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    })
+
+    !cancelled && uri && uploadImage(uri)
+  }
+
+  const renderActions = (props) => {
+    return (
+      <>
+        <Actions
+          {...props}
+          onPressActionButton={pickFromGallery}
+          icon={() => <Ionicons name='md-photos' size={32} color='#737373' />}
+        />
+        <Actions
+          {...props}
+          onPressActionButton={useCamera}
+          icon={() => <Ionicons name='md-camera' size={32} color='#737373' />}
+        />
+      </>
+    )
+  }
+
   return (
     <View style={{ flex: 1 }}>
-      <GiftedChat messages={messages} user={user} onSend={handleSend} />
+      <GiftedChat
+        messages={messages}
+        user={user}
+        onSend={handleSend}
+        renderActions={renderActions}
+      />
       {/* {Platform.OS === 'android' && <KeyboardAvoidingView behavior='padding' />} */}
     </View>
   )
 }
 
 ChatScreen.propTypes = {
-  userData:PropTypes.shape({
+  userData: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   }).isRequired,
 }
 
