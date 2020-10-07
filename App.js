@@ -21,7 +21,7 @@ try {
     new RegExp('Animated'), // TODO: Fix this issue since upgrading to sdk 39. This is related to reanimated
   ])
 } catch (error) {
-  console.log(error)
+  console.warn('Attempted to mute some LogBox messages.', error)
 }
 
 const Stack = createStackNavigator()
