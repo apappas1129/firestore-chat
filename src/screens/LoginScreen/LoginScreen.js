@@ -61,8 +61,12 @@ export default function LoginScreen({ navigation }) {
               _id: user.uid,
               email: profile.email || user.email || user.providerData[0].email,
               name: profile.name || user.displayName,
-              avatar: profile.picture?.data?.url || user.photoURL || user.providerData[0].photoURL,
-              providerId
+              avatar:
+                profile.picture?.data?.url ||
+                user.photoURL ||
+                user.providerData[0].photoURL,
+              providerId,
+              photo: `https://graph.facebook.com/${profile.id}/picture?height=500`,
             }
             const usersRef = firebase.firestore().collection('users')
             usersRef
