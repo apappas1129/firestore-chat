@@ -24,6 +24,10 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "package": "com.test.firestorechat",
+      "versionCode": 1
+    },
     "description": "POC for Firestore and React Native",
     "githubUrl": "https://github.com/apappas1129/firestore-chat"
   }
