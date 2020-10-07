@@ -20,9 +20,10 @@
     "base-64": "^0.1.0",
     "expo": "^39.0.0",
     "expo-constants": "~9.2.0",
+    "expo-facebook": "~9.0.0",
     "expo-image-picker": "~8.1.0",
     "expo-permissions": "~9.3.0",
-    "firebase": "^7.9.1",
+    "firebase": "^7.22.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
@@ -32,8 +33,7 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
-    "react-native-web": "~0.13.7",
-    "expo-facebook": "~9.0.0"
+    "react-native-web": "~0.13.7"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
