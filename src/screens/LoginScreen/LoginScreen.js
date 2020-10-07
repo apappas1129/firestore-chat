@@ -3,8 +3,7 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
 import { firebase } from '../../firebase/firebase.app'
-import * as Facebook from 'expo-facebook';
-import { displayName } from 'react-native/Libraries/ReactNative/RootTagContext'
+import * as Facebook from 'expo-facebook'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
@@ -53,18 +52,18 @@ export default function LoginScreen({ navigation }) {
     try {
       await Facebook.initializeAsync({
         appId: '652276578992895',
-      });
+      })
       const {
         type,
         token,
       } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['public_profile', 'email'],
-      });
+      })
       if (type === 'success') {
         const credential = firebase.auth.FacebookAuthProvider.credential(token)
 
         // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`)
         console.log('Logged in!', `Hi ${(await response.json()).name}!`)
 
         firebase.auth().signInWithCredential(credential).then((response) => {
@@ -95,7 +94,7 @@ export default function LoginScreen({ navigation }) {
         // type === 'cancel'
       }
     } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
+      alert(`Facebook Login Error: ${message}`)
     }
   }
 
