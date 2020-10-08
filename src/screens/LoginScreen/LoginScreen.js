@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles'
 import { firebase } from '../../firebase/firebase.app'
 import * as Facebook from 'expo-facebook'
-import { facebookAppID } from '../../../environment'
+import env from '../../../environment'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
   async function loginWithFacebook() {
     try {
       await Facebook.initializeAsync({
-        appId: facebookAppID,
+        appId: env.facebookAppID,
       })
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['public_profile', 'email'],

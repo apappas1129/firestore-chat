@@ -49,7 +49,6 @@ const ChatScreen = (props) => {
       appendMessages(messagesFirestore)
     })
 
-    // Stop listening for updates when no longer required
     return () => unsubscribe()
   }, [])
 
@@ -83,11 +82,7 @@ const ChatScreen = (props) => {
         if (!response) return
 
         token = response
-
-        // NOTE: We separated the tokens to another collection instead of using the 'users' collection.
-        // This is to flatten data and avoid expensive queries when notifying multiple devices.
         expoPushTokensRef.doc(user._id).set({ token })
-
         AsyncStorage.setItem('expoPushToken', token)
       })
     }
@@ -183,6 +178,7 @@ const ChatScreen = (props) => {
         user={user}
         onSend={handleSend}
         renderActions={renderActions}
+        renderUsernameOnMessage={true}
       />
       {/* {Platform.OS === 'android' && <KeyboardAvoidingView behavior='padding' />} */}
     </View>
