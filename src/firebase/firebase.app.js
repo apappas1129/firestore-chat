@@ -2,10 +2,10 @@ import * as firebase from 'firebase'
 import '@firebase/auth'
 import '@firebase/firestore'
 import '@firebase/storage'
-import { firebaseConfig } from '../../environment'
+import env from '../../environment'
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(env.firebaseConfig)
 }
 
 const firestore = firebase.firestore()
