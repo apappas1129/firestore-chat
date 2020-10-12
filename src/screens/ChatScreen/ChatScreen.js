@@ -137,11 +137,19 @@ const ChatScreen = (props) => {
     upload(uri, uuidV4()).then(async (uploadTaskSnapshot) => {
       const downloadURL = await uploadTaskSnapshot.ref.getDownloadURL()
 
+      //clean to avoid errors from firestore set
+      let sender = { ...user}
+      for (var propName in sender) {
+        if (sender[propName] === null || sender[propName] === undefined) {
+          delete sender[propName]
+        }
+      }
+
       handleSend([
         {
           _id: uuidV4(),
           createdAt: getTimestamp(),
-          user,
+          user: sender,
           image: downloadURL,
         },
       ])
