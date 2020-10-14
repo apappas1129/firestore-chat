@@ -22,10 +22,13 @@
     "expo-app-auth": "~9.2.0",
     "expo-constants": "~9.2.0",
     "expo-facebook": "~9.0.0",
+<<<<<<< HEAD
     "expo-google-app-auth": "^8.1.3",
+=======
+>>>>>>> 71a3dcd5e0b32522dac21e1fd13efa544278f316
     "expo-image-picker": "~8.1.0",
     "expo-permissions": "~9.3.0",
-    "firebase": "^7.9.1",
+    "firebase": "^7.22.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
