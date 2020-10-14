@@ -2,6 +2,7 @@
   "expo": {
     "name": "Firestore Chat",
     "slug": "firestore-chat",
+    "scheme": "firestorechat",
     "platforms": [
       "ios",
       "android",
@@ -22,11 +23,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.test.firestorechatgooglesignin",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.24188474654-95ihu65m16l84tgric170o8ondk3au0c"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.test.firestorechat",
-      "versionCode": 1
+      "versionCode": 1,
+      "googleServicesFile": "./src/debug/google-services.json",
+      "config":{
+        "googleSignIn":{
+          "certificateHash" : "766789EC7222F59D5B64AEEAF4FF31DAF3CE3BB7"
+        }
+      }
     },
     "description": "POC for Firestore and React Native",
     "githubUrl": "https://github.com/apappas1129/firestore-chat"

@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from './styles'
 import { firebase } from '../../firebase/firebase.app'
 import * as Facebook from 'expo-facebook'
 import env from '../../../environment'
+import * as Google from "expo-google-app-auth"
+
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
@@ -89,6 +91,42 @@ export default function LoginScreen({ navigation }) {
     }
   }
 
+  async function signInWithGoogle() {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: env.googleAndroidClientId,
+        scopes: ["profile", "email"]
+      });
+      if (result.type === "success") {
+        const credential = firebase.auth.GoogleAuthProvider.credential(result.idToken, result.accessToken)
+        console.log(credential)
+        firebase.auth().signInWithCredential(credential).then((user) => {
+          const data = {
+            _id: result.user.id,
+            email: result.user.email,
+            name: result.user.name,
+            avatar: result.user.photoUrl,
+          }
+          const usersRef = firebase.firestore().collection('users')
+          usersRef
+            .doc(result.user.id)
+            .set(data)
+            .then(() => {
+              navigation.navigate('Home', { user: data })
+            })
+            .catch((error) => {
+              alert(error)
+            })
+        })
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      console.log('LoginScreen.js.js 30 | Error with login', e);
+      return { error: true };
+    }
+  }
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -126,6 +164,12 @@ export default function LoginScreen({ navigation }) {
           onPress={() => loginWithFacebook()}
         >
           <Text style={styles.buttonTitle}>Log in With Facebook</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => signInWithGoogle()}
+        >
+          <Text style={styles.buttonTitle}>Log in With Google</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>

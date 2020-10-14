@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>24188474654-95ihu65m16l84tgric170o8ondk3au0c.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.24188474654-95ihu65m16l84tgric170o8ondk3au0c</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>24188474654-ded2h6e1h07ficjj6bocu68lnnh4r5ml.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBI4fGcW__4hcGdQhiFmmWnAZwqvK5uy08</string>
+	<key>GCM_SENDER_ID</key>
+	<string>24188474654</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.test.firestorechatgooglesignin</string>
+	<key>PROJECT_ID</key>
+	<string>firestore-chat-832fc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>firestore-chat-832fc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:24188474654:ios:06c5113cd03e106812650f</string>
+	<key>DATABASE_URL</key>
+	<string>https://firestore-chat-832fc.firebaseio.com</string>
+</dict>
+</plist>
